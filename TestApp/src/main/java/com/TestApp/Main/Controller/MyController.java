@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-public class ProductController {
+public class MyController {
   
     private final List<Product> products = new ArrayList<>();
   
