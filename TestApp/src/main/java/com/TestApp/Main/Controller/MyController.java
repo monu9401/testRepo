@@ -11,16 +11,16 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
   
-    private final List<Product> products = new ArrayList<>;
-    Product p1 = new Product(101,"Phone",50000);
-    Product p2 = new Product(102,"Laptop",100000);
-    Product p3 = new Product(103,"Data Cable",500);
-    products.add(p1);
-    products.add(p2);
-    products.add(p3);
+    private final List<Product> products = new ArrayList<>();
   
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
+        Product p1 = new Product(101,"Phone",50000);
+        Product p2 = new Product(102,"Laptop",100000);
+        Product p3 = new Product(103,"Data Cable",500);
+        products.add(p1);
+        products.add(p2);
+        products.add(p3);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 }
