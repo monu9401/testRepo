@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/product")
 public class MyController {
   
-    private final List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();
   
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
