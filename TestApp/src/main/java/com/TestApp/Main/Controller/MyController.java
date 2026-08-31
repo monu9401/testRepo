@@ -10,9 +10,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 public class MyController {
-  
+
     private List<Product> products = new ArrayList<>();
-  
+
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         Product p1 = new Product(101,"Phone",50000);
@@ -33,5 +33,17 @@ class Product{
     this.id=id;
     this.name=name;
     this.price=price;
+  }
+
+  public int getId() {
+      return id;
+  }
+
+  public String getName() {
+      return name;
+  }
+
+  public int getPrice() {
+      return price;
   }
 }
