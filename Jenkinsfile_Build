@@ -4,28 +4,35 @@ pipeline{
     stages{
         stage("Confirm Checkout"){
             steps{
-                bat """
-                    dir
-                    cd TestApp
-                    dir
-                    echo Source Code checkout successful
-                    mvn test
-                """
+                bat "dir"
+                bat "echo Source Code Checkout Successful"
             }
         }
         stage("Run Tests"){
             steps{
                 bat "echo Running tests for TestApp"
+                bat """
+                    cd TestApp
+                    mvn test
+                """
             }
         }
         stage("Source code build"){
             steps{
-                bat "echo Source code build is done"
+                bat "echo Building source code for TestApp"
+                bat """
+                    cd TestApp
+                    mvn clean install
+                """
             }
         }
         stage("Validate Project Structure"){
             steps{
-                bat "echo Project structure validated"
+                bat "echo Validating Project structure"
+                bat """
+                    cd TestApp
+                    mvn validate
+                """
             }
         }
         stage("Deploy to Server"){
