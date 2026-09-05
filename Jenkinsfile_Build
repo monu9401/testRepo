@@ -9,6 +9,7 @@ pipeline{
                     cd TestApp
                     dir
                     echo Source Code checkout successful
+                    mvn test
                 """
             }
         }
