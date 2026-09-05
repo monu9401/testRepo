@@ -1,78 +1,67 @@
 pipeline{
     agent any
     
-    environment{
-        technology="Java"
-    }
-    
-    parameters{
-        string(name:"Username")
-        booleanParam(name:"Confirm your username")
-        choice(name:"Select environment", choices:["DEV","UAT","PROD"])
-    }
-    
     stages{
-        stage("Run some commands"){
+        stage("Confirm Checkout"){
             steps{
-                bat "echo Let's run some commands"
                 bat "dir"
-                bat "whoami"
+                bat "echo Source Code Checkout Successful"
             }
         }
-        stage("View environment variables"){
-            environment{
-                year="2026"
-            }
+        stage("Run Tests"){
             steps{
-                bat "echo Some environment variables"
-                bat "echo %BUILD_ID%"
-                bat "echo %BUILD_NUMBER%"
-                bat "echo %technology%"
-                bat "echo %year%"
-                bat "echo %admin_user%"
+                bat "echo Running tests for TestApp"
+                bat """
+                    cd TestApp
+                    mvn test
+                """
             }
         }
-        stage("View input parameters"){
+        stage("Validate Project Structure"){
             steps{
-                bat "echo %Username%"
-                bat "echo %Confirm your username%"
-                bat "echo %Select environment%"
+                bat "echo Validating Project structure"
+                bat """
+                    cd TestApp
+                    mvn validate
+                """
             }
         }
-        stage("Checkout from Git"){
+        stage("Source code build"){
             steps{
-                bat "echo Cloning from Git"
-                bat "git clone https://github.com/monu9401/testRepo.git"
-                bat "dir"
+                bat "echo Building source code for TestApp"
+                bat """
+                    cd TestApp
+                    mvn clean install
+                """
             }
         }
-        stage("Deploy to Production"){
+        stage("Deploy to Server"){
             input{
-                message "Should we deploy to Production"
-                ok "Yes"
+                message "Do you want to deploy the app to server"
+                ok "yes"
             }
             steps{
-                bat "echo Deploying to Production"
+                bat "ping 127.0.0.1 -n 20 > nul"
+                bat "echo Project deployed to Server"
             }
         }
-        stage("Cleanup workspace"){
+        stage("Run the app"){
+            options {
+                timeout(time: 3, unit: 'MINUTES')
+            }
             steps{
-                bat "rmdir /s /q testRepo"
-                bat "echo Workspace cleaned up"
-                bat "dir"
+                bat "echo Running TestApp"
+                bat """
+                    cd TestApp/target
+                    java -jar TestApp-0.0.1-SNAPSHOT.jar
+                """
             }
         }
     }
     post{
         always{
-            cleanWs()
+            cleanWs();
             bat "echo Workspace cleaned up"
-        }
-        failure{
-            bat "echo Some failure encountered. Please check logs"
-        }
-        success{
-            bat "echo Everything worked well"
         }
     }
 }
