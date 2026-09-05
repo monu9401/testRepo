@@ -5,9 +5,6 @@ pipeline{
         stage("Checkout"){
             steps{
                 bat "echo Checking out from Git"
-                bat "git clone https://github.com/monu9401/testRepo.git"
-                bat "dir"
-                bat "cd testRepo"
                 bat "dir"
             }
         }
