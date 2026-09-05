@@ -46,8 +46,15 @@ pipeline{
             }
         }
         stage("Run the app"){
+            options {
+                timeout(time: 3, unit: 'MINUTES')
+            }
             steps{
-                bat "echo App is running"
+                bat "echo Running TestApp"
+                bat """
+                    cd TestApp/target
+                    java -jar TestApp-0.0.1-SNAPSHOT.jar
+                """
             }
         }
     }
