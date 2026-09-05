@@ -4,10 +4,12 @@ pipeline{
     stages{
         stage("Confirm Checkout"){
             steps{
-                bat "echo Source code checkout successful"
-                bat "dir"
-                bat "cd TestApp"
-                bat "dir"
+                bat """
+                    dir
+                    cd TestApp
+                    dir
+                    echo Source Code checkout successful
+                """
             }
         }
         stage("Run Tests"){
