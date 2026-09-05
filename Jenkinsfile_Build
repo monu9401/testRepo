@@ -1,0 +1,50 @@
+pipeline{
+    agent any
+    
+    stages{
+        stage("Checkout"){
+            steps{
+                bat "echo Checking out from Git"
+                bat "git clone https://github.com/monu9401/testRepo.git"
+                bat "dir"
+                bat "cd testRepo"
+                bat "dir"
+            }
+        }
+        stage("Run Tests"){
+            steps{
+                bat "echo Running tests for TestApp"
+            }
+        }
+        stage("Source code build"){
+            steps{
+                bat "echo Source code build is done"
+            }
+        }
+        stage("Validate Project Structure"){
+            steps{
+                bat "echo Project structure validated"
+            }
+        }
+        stage("Deploy to Server"){
+            input{
+                message "Do you want to deploy the app to server"
+                ok "yes"
+            }
+            steps{
+                bat "echo Project deployed to Server"
+            }
+        }
+        stage("Run the app"){
+            steps{
+                bat "echo App is running"
+            }
+        }
+    }
+    post{
+        always{
+            cleanWs();
+            bat "echo Workspace cleaned up"
+        }
+    }
+}
