@@ -17,21 +17,21 @@ pipeline{
                 """
             }
         }
-        stage("Source code build"){
-            steps{
-                bat "echo Building source code for TestApp"
-                bat """
-                    cd TestApp
-                    mvn clean install
-                """
-            }
-        }
         stage("Validate Project Structure"){
             steps{
                 bat "echo Validating Project structure"
                 bat """
                     cd TestApp
                     mvn validate
+                """
+            }
+        }
+        stage("Source code build"){
+            steps{
+                bat "echo Building source code for TestApp"
+                bat """
+                    cd TestApp
+                    mvn clean install
                 """
             }
         }
